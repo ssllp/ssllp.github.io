@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>微服务学习 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="微服务学习微服务
+单体架构比较简单，小系统的开发成本较小，但不适合大型服务，会导致开发耦合度高，不易于团队合作，影响系统的可用性，微服务就比较适合开发大型复杂的项目。SpringCloud是Spri,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="微服务学习 - Hexo"/>
+    <meta name="twitter:description" content="微服务学习微服务
+单体架构比较简单，小系统的开发成本较小，但不适合大型服务，会导致开发耦合度高，不易于团队合作，影响系统的可用性，微服务就比较适合开发大型复杂的项目。SpringCloud是Spri,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="微服务学习 - Hexo"/>
+    <meta property="og:description" content="微服务学习微服务
+单体架构比较简单，小系统的开发成本较小，但不适合大型服务，会导致开发耦合度高，不易于团队合作，影响系统的可用性，微服务就比较适合开发大型复杂的项目。SpringCloud是Spri,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://ssllp.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">微服务学习</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">微服务学习</h1>
+        <div class="stuff">
+            <span>十月 16, 2023</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1><span id="微服务学习">微服务学习</span></h1><h2><span id="微服务">微服务</span></h2><blockquote>
+<p>单体架构比较简单，小系统的开发成本较小，但不适合大型服务，会导致开发耦合度高，不易于团队合作，影响系统的可用性，微服务就比较适合开发大型复杂的项目。SpringCloud是Spring家族的成员，继承了其他的微服务实现，由于其强大的自动配置所以可以很好的集成第三方框架，使用广泛。</p>
+</blockquote>
+<h3><span id="拆分原则">拆分原则</span></h3><blockquote>
+<p>高内聚，每个微服务的职责要尽量统一，包含的业务相互关联度高、完整度高。</p>
+<p>低耦合，每个微服务的功能要相对独立，尽量减少对其他微服务的依赖。</p>
+<p>提高关联度，降低依赖。</p>
+<p>纵向拆分：按业务模块拆分</p>
+<p>横向拆分：抽取公共服务、提高复用性</p>
+<p>一般是进行业务拆分，新建模块部署业务即可</p>
+</blockquote>
+<h3><span id="远程调用">远程调用</span></h3><blockquote>
+<p>当我们要调用其他模块的业务时，我们就需要使用到远程调用，通过网络的方式获得响应来让业务正常进行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//需要用到RestTemplate进行远程调用，比如</span></span><br><span class="line">ResponseEntity&lt;List&lt;ItemDTO&gt;&gt; respose = restTemplate.exchange(<span class="string">&quot;http://localhost:8081/items?ids=&#123;ids&#125;&quot;</span>,</span><br><span class="line">                HttpMethod.GET,</span><br><span class="line">                <span class="keyword">null</span>,</span><br><span class="line">                <span class="keyword">new</span> ParameterizedTypeReference&lt;List&lt;ItemDTO&gt;&gt;() &#123;</span><br><span class="line">                &#125;, Map.of(<span class="string">&quot;ids&quot;</span>, CollUtil.join(itemIds, <span class="string">&quot;,&quot;</span>)));</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3><span id="nacos注册中心">Nacos注册中心</span></h3><blockquote>
+<p>为了方便找到服务和消费者，所以要使用注册中心。这里使用Nacos</p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

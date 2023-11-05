@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Docker安装及使用 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Docker安装及使用Docker是什么？
+Docker是一个快速部署、运行和管理应用的工具，可以帮助我们快速打包和部署应用。
+
+Docker安装
+去官网，https://docs.docker.c,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Docker安装及使用 - Hexo"/>
+    <meta name="twitter:description" content="Docker安装及使用Docker是什么？
+Docker是一个快速部署、运行和管理应用的工具，可以帮助我们快速打包和部署应用。
+
+Docker安装
+去官网，https://docs.docker.c,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Docker安装及使用 - Hexo"/>
+    <meta property="og:description" content="Docker安装及使用Docker是什么？
+Docker是一个快速部署、运行和管理应用的工具，可以帮助我们快速打包和部署应用。
+
+Docker安装
+去官网，https://docs.docker.c,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://ssllp.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Docker安装及使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Docker安装及使用</h1>
+        <div class="stuff">
+            <span>十月 03, 2023</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1><span id="docker安装及使用">Docker安装及使用</span></h1><h2><span id="docker是什么">Docker是什么？</span></h2><blockquote>
+<p>Docker是一个快速部署、运行和管理应用的工具，可以帮助我们快速打包和部署应用。</p>
+</blockquote>
+<h2><span id="docker安装">Docker安装</span></h2><blockquote>
+<p>去官网，<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/%EF%BC%8C">https://docs.docker.com/engine/install/centos/，</a></p>
+<p>使用脚本快速安装</p>
+<p>curl -fsSL <a target="_blank" rel="noopener" href="https://get.docker.com/">https://get.docker.com</a> -o get-docker.sh<br>sudo sh ./get-docker.sh –dry-run</p>
+<p>docker -v查看docker版本号确定是否安装成功</p>
+<p>systemctl start docker 启动docker</p>
+<p>systemctl enable docker 开机自启</p>
+</blockquote>
+<h2><span id="可视化界面portainer下载">可视化界面portainer下载</span></h2><blockquote>
+<p>docker volume create portainer_data 创建储存库</p>
+<p>docker run -d -p 8000:8000 -p 9443:9443 –name portainer –restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest 创建并运行portainer容器</p>
+<p>9443端口即可访问</p>
+</blockquote>
+<h2><span id="配置docker加速">配置docker加速</span></h2><blockquote>
+<p>打开阿里云 容器镜像服务ACR</p>
+<p>sudo mkdir -p /etc/docker</p>
+<p>sudo tee /etc/docker/daemon.json &lt;&lt;-‘EOF’ {  “registry-mirrors”: [“<a href="https://31df3uqf.mirror.aliyuncs.com&quot;]">https://31df3uqf.mirror.aliyuncs.com&quot;]</a> } EOF </p>
+<p>sudo systemctl daemon-reload </p>
+<p>sudo systemctl restart docker</p>
+</blockquote>
+<h2><span id="docker常见命令">Docker常见命令</span></h2><blockquote>
+<p>docker run 创建并运行一个容器，-d 指后台运行，–name设置容器名称，-p设置端口映射，-e 设置环境变量</p>
+<p>比如部署Nginx，docker run -d –name nginx -p 80:80 nginx</p>
+<p>docker pull 镜像  拉取镜像</p>
+<p>docker images 查看所有镜像</p>
+<p>docker rmi 镜像名 删除镜像</p>
+<p>docker build 构建镜像</p>
+<p>docker save -o 包名 镜像名  打包镜像</p>
+<p>docker load -i 包名  加载镜像</p>
+<p>docker push 推送到镜像仓库</p>
+<p>docker run 创建并运行容器</p>
+<p>docker stop 容器 停止容器</p>
+<p>docker start 容器 启动容器</p>
+<p>docker ps 查看容器运行状态</p>
+<p>打开.bashrc文件，设置别名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias dps=&#x27;docker ps --format &quot;table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Image&#125;&#125;\t&#123;&#123;.Ports&#125;&#125;\t&#123;&#123;.Names&#125;&#125;&quot;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>docker rm 容器 删除容器</p>
+<p>docker logs 查看容器日志</p>
+<p>docker exec -it 容器名 bash 进入容器</p>
+</blockquote>
+<h2><span id="docker数据卷">Docker数据卷</span></h2><blockquote>
+<p>问题：容器虽然是一个操作系统，但是太简易了，甚至连vim等命令都没有，所以对一些资源的修改是非常不友好的，我们就需要用数据卷。</p>
+<p>数据卷是一个虚拟的目录，是容器内目录与宿主机目录的桥梁。每一个数据卷都与一个真实目录关联</p>
+<p>docker volume create 创建数据卷</p>
+<p>docker volume ls 查看所有数据卷</p>
+<p>docker volume inspect 查看某个数据卷详情</p>
+<p>docker volume rm 删除某个数据卷</p>
+<p>docker volume prune 清除数据卷</p>
+<p>设置数据卷实现了宿主机和容器之间的双向映射比如将Nginx的html和宿主机绑定</p>
+<p>docker run -d –name nginx -p 80:80 -v html:/usr/share/nginx/html nginx</p>
+<p>这样在/var/lib/docker/volumes/html/_data下面就会有对应的数据，可以直接对其修改</p>
+<p><strong>对本地进行挂载数据卷</strong></p>
+<p>实现mysql数据目录、配置文件、初始化脚本的挂载</p>
+<p>挂载/root/mysql/data到/var/lib/mysql</p>
+<p>挂载/root/mysql/init到/docker-entrypoint-initdb.d</p>
+<p>挂载/root/mysql/conf到/etc/mysql/conf.d</p>
+<p>docker run -d –name mysql -p 3306:3306 -e TZ=Asia/Shanghai -e MYSQL_ROOT_PASSWORD=123 </p>
+<p>-v /root/mysql/data:/var/lib/mysql</p>
+<p>-v /root/mysql/init:/docker-entrypoint-initdb.d </p>
+<p>-v /root/mysql/conf:/etc/mysql/conf.d</p>
+<p>mysql</p>
+</blockquote>
+<h2><span id="dockerfile自定义镜像">Dockerfile自定义镜像</span></h2><blockquote>
+<p>镜像实际上是由很多包组成，镜像是分层的，这样的好处就是可以直接拿做好的镜像来直接使用。一般镜像由入口、层和基础镜像组成。</p>
+<p>from 指定基础镜像 from centos:7</p>
+<p>env 设置环境变量 env key value</p>
+<p>copy 拷贝本地文件到镜像的指定目录 copy test.tar.gz /tmp</p>
+<p>run 执行shell命令</p>
+<p>expose 指定容器运行时监听端口</p>
+<p>entrypoint 启动脚本</p>
+</blockquote>
+<h2><span id="idea部署docker">Idea部署Docker</span></h2><blockquote>
+<p>如果代码要修改，就要重新创建镜像，这不是扯淡吗！上Idea！yyds</p>
+<ol>
+<li><p>开启docker远程访问：vim /lib/systemd/system/docker.service  a.修改ExecStar：ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock b.重新加载配置文件 systemctl daemon-reload c.重启docker systemctl restart docker.service d.查看端口是否开启 netstat -anp |grep 2375 e.Curl判断是否生效 curl <a target="_blank" rel="noopener" href="http://127.0.0.1:2375/info">http://127.0.0.1:2375/info</a></p>
+</li>
+<li><p>配置docker插件</p>
+<img src="/2023/10/03/Docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/image-20231004212836085.png" alt="image-20231004212836085" style="zoom:50%;"> </li>
+<li><p>可以在插件内进行镜像和容器的操作</p>
+<p><img src="/2023/10/03/Docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/image-20231004213717897.png" alt="image-20231004213717897"> </p>
+</li>
+<li><p>配置好docker-maven-plugin</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>docker-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">imageName</span>&gt;</span>$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">imageName</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">baseImage</span>&gt;</span>openjdk:8<span class="tag">&lt;/<span class="name">baseImage</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">maintainer</span>&gt;</span>Ptsnake 3050780650@qq.com<span class="tag">&lt;/<span class="name">maintainer</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">workdir</span>&gt;</span>/ROOT<span class="tag">&lt;/<span class="name">workdir</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">cmd</span>&gt;</span>[&quot;java&quot;, &quot;-version&quot;]<span class="tag">&lt;/<span class="name">cmd</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">entryPoint</span>&gt;</span>[&quot;java&quot;, &quot;-jar&quot;, &quot;$&#123;project.build.finalName&#125;.jar&quot;]<span class="tag">&lt;/<span class="name">entryPoint</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dockerHost</span>&gt;</span>http://192.168.64.128:2375<span class="tag">&lt;/<span class="name">dockerHost</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 这里是复制 jar 包到 docker 容器指定目录配置 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>/ROOT<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;project.build.directory&#125;<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">include</span>&gt;</span>$&#123;project.build.finalName&#125;.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>每次修改都可以，clean，package，docker build，这样就直接创建好了镜像，不用我们手动去编写Dockerfile和上传jar包。</p>
+</li>
+</ol>
+</blockquote>
+<h2><span id="dockercompose">Dockercompose</span></h2><blockquote>
+<p>DockerCompose是用于编排容器，可以统一管理多个容器的启动和停止。需要安装下载</p>
+<p>编写docker-compose.yml文件</p>
+<p>比如配置五个boot应用</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.1&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">bootdemo-8081:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bootdemo</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">bootdemo-8081</span></span><br><span class="line">    <span class="attr">ports:</span> </span><br><span class="line">     <span class="bullet">-</span> <span class="number">8081</span><span class="string">:8081</span></span><br><span class="line">  <span class="attr">bootdemo-8082:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bootdemo</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">bootdemo-8082</span></span><br><span class="line">    <span class="attr">ports:</span> </span><br><span class="line">     <span class="bullet">-</span> <span class="number">8082</span><span class="string">:8081</span></span><br><span class="line">  <span class="attr">bootdemo-8083:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bootdemo</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">bootdemo-8083</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8083</span><span class="string">:8081</span></span><br><span class="line">  <span class="attr">bootdemo-8084:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bootdemo</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">bootdemo-8084</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8084</span><span class="string">:8081</span></span><br><span class="line">  <span class="attr">bootdemo-8085:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bootdemo</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">bootdemo-8085</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">8085</span><span class="string">:8081</span></span><br></pre></td></tr></table></figure>
+
+<p>image 指定镜像，container_name指定容器名，ports指定端口号映射</p>
+<p>如果想要同时开启100台服务，就可以使用dockercompose。</p>
+</blockquote>
+<h2><span id="docker部署redis">Docker部署redis</span></h2><blockquote>
+<p>docker run -d –name myredis -p 6379:6379 redis</p>
+<p>dps 检查</p>
+<p>docker exec -it myredis bash 进去执行命令</p>
+<p>雀食方便，爱死镜像了。</p>
+</blockquote>
+<h2><span id="docker部署mysql">Docker部署mysql</span></h2><blockquote>
+<p>docker run -d –name mysql -p 3307:3306 -e TZ=Asia/Shanghai -e MYSQL_ROOT_PASSWORD=123 -v /home/docker/volumes/mysql/data:/var/lib/mysql -v /home/docker/volumes/mysql/conf:/etc/mysql/conf.d -v /home/docker/volumes/mysql/init:/docker-entrypoint-initdb.d –network hm-net mysql</p>
+<p>docker exec -it mysql mysql -uroot -p即可连接到数据库</p>
+</blockquote>
+<h2><span id="docker部署一个springboot项目">Docker部署一个SpringBoot项目</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、准备好一个springboot项目</span><br><span class="line">2、mvn package 打包成 springboot.jar</span><br><span class="line">3、Windows运行 java -jar springboot.jar</span><br><span class="line">4、Linux运行 安装jdk，java -jar springboot.jar，不过java -jar 只能运行一个项目，这就不是很好了，所以使用docker进行部署隔离</span><br><span class="line">5、使用Docker</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将项目打成jar包</p>
+<p>写Dockerfile，创建镜像，创建容器即可</p>
+<p>Dockerfile</p>
+<p>FROM openjdk:8<br>VOLUME /home/dockerTest<br>ADD fishexam.jar fishexam.jar<br>EXPOSE 8888<br>ENTRYPOINT [“java”,”-jar”,”/fishexam.jar”]</p>
+<p>即基于jdk8镜像，目录为/home/dockerTest，将jar包添加到镜像中，暴露8888端口，执行命令java -jar /fishexam.jar</p>
+<p>docker build -t fishexam .</p>
+<p>docker run -d –name fishexam -p 8888:8888 fishexam</p>
+<p>这样就部署了一个SpringBoot项目</p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

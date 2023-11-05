@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>String字符串、数组 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="
+
+
+字符串和数组
+字符
+Character方法
+字符的比较
+
+
+字符串
+String
+StringBuffer
+
+
+数组
+数组的特点
+一维数组
+二维数组
+数组的操作工具类Arrays
+
+
+
+
+
+
+,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="String字符串、数组 - Hexo"/>
+    <meta name="twitter:description" content="
+
+
+字符串和数组
+字符
+Character方法
+字符的比较
+
+
+字符串
+String
+StringBuffer
+
+
+数组
+数组的特点
+一维数组
+二维数组
+数组的操作工具类Arrays
+
+
+
+
+
+
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="String字符串、数组 - Hexo"/>
+    <meta property="og:description" content="
+
+
+字符串和数组
+字符
+Character方法
+字符的比较
+
+
+字符串
+String
+StringBuffer
+
+
+数组
+数组的特点
+一维数组
+二维数组
+数组的操作工具类Arrays
+
+
+
+
+
+
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://ssllp.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">String字符串、数组</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">String字符串、数组</h1>
+        <div class="stuff">
+            <span>四月 26, 2023</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <!-- toc -->
+
+<ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E7%BB%84">字符串和数组</a><ul>
+<li><a href="#%E5%AD%97%E7%AC%A6">字符</a><ul>
+<li><a href="#character%E6%96%B9%E6%B3%95">Character方法</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E7%9A%84%E6%AF%94%E8%BE%83">字符的比较</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a><ul>
+<li><a href="#string">String</a></li>
+<li><a href="#stringbuffer">StringBuffer</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E7%BB%84">数组</a><ul>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E7%89%B9%E7%82%B9">数组的特点</a></li>
+<li><a href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84">一维数组</a></li>
+<li><a href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84">二维数组</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C%E5%B7%A5%E5%85%B7%E7%B1%BBarrays">数组的操作工具类Arrays</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="字符串和数组">字符串和数组</span></h1><h2><span id="字符">字符</span></h2><ul>
+<li>被单引号包围的单个字母，16位，占两个字节</li>
+</ul>
+<p>在需要将char作为对象的时候我们就要用char的包装类型Character。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Character ch_sex=<span class="keyword">new</span> Character(<span class="string">&#x27;男&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这是我们去进行声明，但是如果char类型被作为引用类型参数时，它就会自动装箱为Character类型，也会自动拆箱</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Character che=<span class="string">&#x27;男&#x27;</span>;<span class="comment">//自动装箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Character <span class="title">method</span><span class="params">(Character aa)</span></span>&#123;......&#125;</span><br><span class="line"><span class="keyword">char</span> ab=method(<span class="string">&#x27;X&#x27;</span>);<span class="comment">//自动拆箱</span></span><br><span class="line"><span class="comment">//Character是不可变的，一旦被创建，就不能被改变</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="character方法">Character方法</span></h3><p>boolean isLetter(char ch) 判断字符是不是一个字母</p>
+<p>boolean isDigit(char ch)  判断字符是不是一个数字</p>
+<p>boolean isWhiteSpace(char ch) 判断字符是否是一个空格</p>
+<p>boolean isUpperCase(char ch) 判断字符是否是大写的字符</p>
+<p>boolean isLowerCase(char ch) 判断字符是否是小写的字符</p>
+<p>char toUpperCase(char ch)将字符转换为大写格式</p>
+<p>char toLowerCase(char ch) 将字符转换为小写格式</p>
+<p>toString(char ch) 将字符转换为指定字符值的字符串</p>
+<h3><span id="字符的比较">字符的比较</span></h3><p>compareTo，比较并返回一个数，如果大于0的话就是大于，小于0的话就是小于</p>
+<p>equals，在字符比较中判断是否相等</p>
+<h2><span id="字符串">字符串</span></h2><h3><span id="string">String</span></h3><p>String类是final类，不允许被继承，String对象是只读的，内容一旦确定就不可更改了。</p>
+<h4><span id="三种实例化方式">三种实例化方式</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">&quot;时间就是金钱，我的朋友。&quot;</span>;		<span class="comment">// 直接引用字符串常量</span></span><br><span class="line">System.out.println(<span class="string">&quot;a = &quot;</span> + a);</span><br><span class="line"></span><br><span class="line">String b = <span class="keyword">new</span> String(<span class="string">&quot;我爱清汤小肥羊&quot;</span>); <span class="comment">// 利用构造方法实例化</span></span><br><span class="line">String c = <span class="keyword">new</span> String(b);               <span class="comment">// 利用已有字符串变量实例化</span></span><br><span class="line">System.out.println(<span class="string">&quot;b = &quot;</span> + b);</span><br><span class="line">System.out.println(<span class="string">&quot;c = &quot;</span> + c);</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>[] d = &#123;<span class="string">&#x27;t&#x27;</span>,<span class="string">&#x27;i&#x27;</span>,<span class="string">&#x27;m&#x27;</span>,<span class="string">&#x27;e&#x27;</span>&#125;;</span><br><span class="line">String e = <span class="keyword">new</span> String(d);               <span class="comment">// 利用字符数组实例化</span></span><br><span class="line">System.out.println(<span class="string">&quot;e = &quot;</span> + e);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>还可以提取数组的一部分来新建</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> [] d=&#123;<span class="string">&#x27;t&#x27;</span>,<span class="string">&#x27;i&#x27;</span>,<span class="string">&#x27;m&#x27;</span>,<span class="string">&#x27;e&#x27;</span>&#125;;</span><br><span class="line">String s=<span class="keyword">new</span> String(d,<span class="number">2</span>,<span class="number">2</span>);<span class="comment">//从下标二开始往后截取两个字符串，即me</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="常用方法速查">常用方法速查</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">()</span>：返回字符串的长度</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">charAt</span><span class="params">(<span class="keyword">int</span> index)</span>：返回指定索引处的字符</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span>：判断字符串是否为空</span></span><br><span class="line"><span class="function">String <span class="title">toLowerCase</span><span class="params">()</span>：将字符串中的所有字符转换为小写</span></span><br><span class="line"><span class="function">String <span class="title">toUpperCase</span><span class="params">()</span>：将字符串中的所有字符转换为大写</span></span><br><span class="line"><span class="function">String <span class="title">trim</span><span class="params">()</span>：返回字符串的副本，去掉前导空白和尾部空白，中间的空白不会被去掉</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span>：比较字符串的内容是否相同</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equalsIgnoreCase</span><span class="params">(String anotherString)</span>：忽略大小写，比较字符串的内容是否相同</span></span><br><span class="line"><span class="function">String <span class="title">concat</span><span class="params">(String str)</span>：将指定字符串连接到此字符串的结尾，等价于用“+”</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(String anotherString)</span>：比较两个字符串的大小</span></span><br><span class="line"><span class="function">String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> beginIndex)</span>：返回从beginIndex到末尾的子字符串</span></span><br><span class="line"><span class="function">String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> beginIndex, <span class="keyword">int</span> endIndex)</span>：返回从beginIndex到endIndex前一位的子字符串,不包括endIndex</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">endsWith</span><span class="params">(String suffix)</span>： 判断字符串是否以指定的后缀结束</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span>：判断字符串是否以指定的前缀开始</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix, <span class="keyword">int</span> toffset)</span>：判断字符串在指定索引开始的子字符串是否以指定前缀开始</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(CharSequence s)</span>：判断当前字符串中是否包含指定的字符串</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span>：返回指定子字符串在当前字符串中第一次出现处的索引</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str, <span class="keyword">int</span> fromIndex)</span>：返回从指定的索引后，指定子字符串在当前字符串中第一次出现处的索引</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(String str)</span>：返回指定子字符串在当前字符串中最后一次出现处的索引</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(String str, <span class="keyword">int</span> fromIndex)</span>：返回从指定的索引后，指定子字符串在当前字符串中最后一次出现处的索引</span></span><br><span class="line"><span class="function">注：indexOf和lastIndexOf方法如果未查找到指定子字符串时，返回值都为-1。</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">String <span class="title">replace</span><span class="params">(<span class="keyword">char</span> oldChar, <span class="keyword">char</span> newChar)</span>：替换当前字符串中指定的子字符串</span></span><br><span class="line"><span class="function">String[] <span class="title">split</span><span class="params">(String regex)</span>：根据指定的符号拆分当前字符串，然后返回一个String数组</span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4><span id="字符串长度length">字符串长度length()</span></h4><p>汉字是2字节，英文是1字节</p>
+<p>以下程序的运行结果如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;b的字符串长度为：&quot;</span>+b.length());<span class="comment">//7</span></span><br><span class="line">System.out.println(<span class="string">&quot;e的字符串长度为：&quot;</span>+e.length());<span class="comment">//5</span></span><br><span class="line">System.out.println(<span class="string">&quot;b的字符串字节长度为：&quot;</span>+b.getBytes().length);<span class="comment">//14</span></span><br><span class="line">System.out.println(<span class="string">&quot;e的字符串字节长度为：&quot;</span>+e.getBytes().length);<span class="comment">//5</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="字符串连接concat">字符串连接concat()</span></h4><p>使用concat()或+去连接，一般用+方便一点</p>
+<h4><span id="字符串比较compareto-equals-equalsignorecase">字符串比较compareTo()、equals()、equalsIgnoreCase()</span></h4><p>compareTo，返回一个int类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String a=<span class="string">&quot;hello&quot;</span>;</span><br><span class="line">String b=<span class="string">&quot;HELLO&quot;</span>;</span><br><span class="line"><span class="keyword">int</span> c=a.compareTo(b);</span><br></pre></td></tr></table></figure>
+
+<p>如果c大于0，证明c在b后面，反之，则在前面</p>
+<p>eauals</p>
+<p>equals是常用的字符串比较，用于判断字符串的值是否相等</p>
+<p>equalsIgnoreCase</p>
+<p>该方法忽略大小写进行比较</p>
+<h4><span id="字符串截取substring">字符串截取substring()</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//substring(),包左不包右</span></span><br><span class="line">        String jie=<span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">        String an=jie.substring(<span class="number">2</span>);</span><br><span class="line">        System.out.println(an);<span class="comment">//llo world</span></span><br><span class="line">        System.out.println(jie.substring(<span class="number">2</span>,<span class="number">5</span>));    <span class="comment">//llo</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="字符串查找charat-indexof">字符串查找charAt()、indexOf()</span></h4><p>获取指定位置的字符，使用charAt()</p>
+<p>获取索引位置，使用indexOf()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String cha=<span class="string">&quot;mychazhao&quot;</span>;</span><br><span class="line">System.out.println(cha.charAt(<span class="number">2</span>));<span class="comment">//c</span></span><br><span class="line">System.out.println(cha.indexOf(<span class="string">&quot;chazhao&quot;</span>));<span class="comment">//2</span></span><br><span class="line">System.out.println(cha.indexOf(<span class="string">&quot;h&quot;</span>,<span class="number">4</span>));<span class="comment">//6</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="获取字符数组tochararray">获取字符数组toCharArray()</span></h4><p>使用toCharArray()方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String num=<span class="string">&quot;你好呀ssl&quot;</span>;</span><br><span class="line"><span class="keyword">char</span>[] anNum=num.toCharArray();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; anNum.length; i++) &#123;</span><br><span class="line">    System.out.println(anNum[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="判断字符串是否存在contains">判断字符串是否存在contains</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String co=<span class="string">&quot;ssssjgjkkjhkhk&quot;</span>;</span><br><span class="line">System.out.println(co.contains(<span class="string">&quot;jgj&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h4><span id="字符串替换replace">字符串替换replace()</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String re=<span class="string">&quot;i love java&quot;</span>;</span><br><span class="line">String replace = re.replace(<span class="string">&quot;java&quot;</span>, <span class="string">&quot;python&quot;</span>);</span><br><span class="line">System.out.println(re);</span><br><span class="line">System.out.println(replace);</span><br></pre></td></tr></table></figure>
+
+<h4><span id="字符串分割-split">字符串分割 split()</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String fenge=<span class="string">&quot;我喜欢zjy，超级喜欢zjy，无比喜欢zjy&quot;</span>;</span><br><span class="line">String[] ansfenge=fenge.split(<span class="string">&quot;，&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ansfenge.length; i++) &#123;</span><br><span class="line">    System.out.println(ansfenge[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="大小写转换">大小写转换</span></h4><p>toUpperCase()</p>
+<p>toLowerCase()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String charcase=<span class="string">&quot;helloHello&quot;</span>;</span><br><span class="line">System.out.println(charcase.toUpperCase());</span><br><span class="line">System.out.println(charcase.toLowerCase());</span><br></pre></td></tr></table></figure>
+
+<h4><span id="去除首尾空白trim">去除首尾空白trim()</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String white=<span class="string">&quot;    hello world     &quot;</span>;</span><br><span class="line">System.out.println(white.trim());<span class="comment">//hello world</span></span><br></pre></td></tr></table></figure>
+
+<h4><span id="string对象创建讲解">String对象创建讲解</span></h4><p>字面量创建</p>
+<p>String a=”abc”;</p>
+<p>会在常量池中创建对象，在堆中并没有对象创建</p>
+<p>String b=new String(“abc”);</p>
+<p>如果常量池中已经存在abc，则只在堆中创建一个对象,如果常量池中没有abc的话，就会即在常量池中创建又会在堆中创建该对象。</p>
+<p>String c=new String(“ab”)+”c”;</p>
+<p>这样拼接会创建一个c在常量池中，创建ab在常量池和堆中，拼接之后的会创建在堆中。</p>
+<p>String d=”ab”+”c”;</p>
+<p>这样只会创建一个对象在常量池中，属于编译优化的语法糖。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">        String s1=<span class="string">&quot;Hello&quot;</span>;</span><br><span class="line">        String s2=<span class="string">&quot;World&quot;</span>;</span><br><span class="line"></span><br><span class="line">        String s3=<span class="string">&quot;HelloWorld&quot;</span>;</span><br><span class="line">        String s4=<span class="string">&quot;Hello&quot;</span>+<span class="string">&quot;World&quot;</span>;</span><br><span class="line">        String s5=s1+<span class="string">&quot;World&quot;</span>;</span><br><span class="line">        String s6=<span class="string">&quot;Hello&quot;</span>+s2;</span><br><span class="line">        String s7=s1+s2;</span><br><span class="line"></span><br><span class="line">        System.out.println(s3==s4); <span class="comment">//true</span></span><br><span class="line">        System.out.println(s3==s5); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s3==s6); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s3==s7); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s5==s6); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s5==s7); <span class="comment">//false</span></span><br><span class="line">        System.out.println(s6==s7); <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">        String s8=s5.intern();</span><br><span class="line">        System.out.println(s3==s8); <span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>(1)Java中有常量优化机制，“Hello”和”World”本身就是字符串常量，所以在编译时，会直接把”Hello”和”World”合并成”HelloWorld”字符串，又因为在执行s3的时候已经在常量池中创建了”HelloWorld”，所以s3==s4。<br>(2)当变量与字面量或变量与变量进行拼接时，会在堆中创建一个StringBuilde对象，然后使用StringBuilder的append()方法将变量与字面量或变量与变量进行拼接，最后调用toString()方法转成String对象。所以s5、s6、s7指向的都是堆内存中String对象的地址值。<br>(3)使用intern()这个方法时，首先会检查字符串常量池中是否有对应的字符串，如果存在则返回这个字符串的引用；否则会先将字符串添加到字符串常量池中，然后再返回这个字符串的引用。所以s3==s8。</p>
+<h3><span id="stringbuffer">StringBuffer</span></h3><p>StringBuffer、StringBuilder和String类似，底层也是用一个数组来存储字符串的值，并且数组的默认长度为16，即一个空的StringBuffer对象数组长度为16。实例化一个StringBuffer对象即创建了一个大小为16个字符的字符串缓冲区。但是当我们调用有参构造函数创建一个StringBuffer对象时，数组长度就不再是16了，而是根据当前对象的值来决定数组的长度，数组的长度为“当前对象的值的长+16”。所以一个 StringBuffer 创建完成之后，有16个字符的空间可以对其值进行修改。如果修改的值范围超出了16个字符，会先检查StringBuffer对象的原char数组的容量能不能装下新的字符串，如果装不下则会对 char 数组进行扩容。</p>
+<p>那StringBuffer是怎样进行扩容的呢？<br>扩容的逻辑就是创建一个新的 char 数组，将现有容量扩大一倍再加上2，如果还是不够大则直接等于需要的容量大小。扩容完成之后，将原数组的内容复制到新数组，最后将指针指向新的 char 数组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StringBuffer <span class="title">append</span><span class="params">(xxx)</span>：拼接字符串</span></span><br><span class="line"><span class="function">StringBuffer <span class="title">delete</span><span class="params">(<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span>：删除指定范围的内容,左开右闭</span></span><br><span class="line"><span class="function">StringBuffer <span class="title">replace</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end, String str)</span>：替换指定范围的内容</span></span><br><span class="line"><span class="function">StringBuffer <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, xxx)</span>：在指定位置插入指定的内容</span></span><br><span class="line"><span class="function">StringBuffer <span class="title">reverse</span><span class="params">()</span> ：把当前字符序列逆转</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span> : 返回指定子字符串在当前字符串中第一次出现处的索引</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span> ：返回指定范围的子字符串</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span> : 返回字符串的长度</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charAt</span><span class="params">(<span class="keyword">int</span> n )</span> : 获取指定索引处的字符</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCharAt</span><span class="params">(<span class="keyword">int</span> n ,<span class="keyword">char</span> ch)</span> : 设置指定索引处的字符</span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+<p>面试题：String、StringBuffer和StringBuilder的异同？<br>相同点：底层都是通过char数组实现的<br>不同点：</p>
+<ul>
+<li>String对象一旦创建，其值是不能修改的，如果要修改，会重新开辟内存空间来存储修改之后的对象；而StringBuffer和StringBuilder对象的值是可以被修改的；</li>
+<li>StringBuffer几乎所有的方法都使用synchronized实现了同步，线程比较安全，在多线程系统中可以保证数据同步，但是效率比较低；而StringBuilder 没有实现同步，线程不安全，在多线程系统中不能使用 StringBuilder，但是效率比较高。</li>
+<li>如果我们在实际开发过程中需要对字符串进行频繁的修改，不要使用String，否则会造成内存空间的浪费；当需要考虑线程安全的场景下使用 StringBuffer，如果不需要考虑线程安全，追求效率的场景下可以使用 StringBuilder。</li>
+</ul>
+<h2><span id="数组">数组</span></h2><h3><span id="数组的特点">数组的特点</span></h3><ul>
+<li>数组时有序排列的</li>
+<li>数组是引用数据类型，数组中的元素可以是任何数据类型，可以是基本数据类型，也可以是引用类型</li>
+<li>创建的数组会在内存中开辟连续的内存空间，数组名引用的其实是数组的首地址</li>
+<li>数组的长度一旦确定就不能修改</li>
+</ul>
+<h3><span id="一维数组">一维数组</span></h3><h4><span id="声明和初始化">声明和初始化</span></h4><p>数组类型[] 数组名;</p>
+<p>数组类型 数组名[];</p>
+<p>例如：String[] a;int a[];</p>
+<p>声明和创建可以一起完成</p>
+<p>例如：String[] a=new String[6];int a[]=new int[6];</p>
+<p>初始化有两种方式：</p>
+<ul>
+<li>静态初始化：</li>
+</ul>
+<blockquote>
+<p>int [] array={1,2,3,4,5};或int [] array=new int[]{1,2,3,4,5};String[] mynames={“hello”,”lisi”,”zjy”};</p>
+</blockquote>
+<ul>
+<li>动态赋值初始化</li>
+</ul>
+<blockquote>
+<p>先创建数组，再进行遍历赋值</p>
+</blockquote>
+<h4><span id="默认赋值">默认赋值</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultchushi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">        String[] b=<span class="keyword">new</span> String[<span class="number">6</span>];</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">6</span>];</span><br><span class="line">        <span class="keyword">short</span>[] shorts=<span class="keyword">new</span> <span class="keyword">short</span>[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">long</span>[] longs=<span class="keyword">new</span> <span class="keyword">long</span>[<span class="number">7</span>];</span><br><span class="line">        <span class="keyword">char</span>[] chars=<span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">7</span>];</span><br><span class="line">        System.out.println(a[<span class="number">0</span>]);<span class="comment">//0</span></span><br><span class="line">        System.out.println(b[<span class="number">0</span>]);<span class="comment">//null</span></span><br><span class="line">        System.out.println(bytes[<span class="number">0</span>]);<span class="comment">//0</span></span><br><span class="line">        System.out.println(shorts[<span class="number">0</span>]);<span class="comment">//0</span></span><br><span class="line">        System.out.println(longs[<span class="number">0</span>]);<span class="comment">//0</span></span><br><span class="line">        System.out.println(chars[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4><span id="内存解析">内存解析</span></h4><p>数组在创建时，对象创建于堆中，对象的引用存放在栈中，数组内值的修改是对堆中内存空间的修改。</p>
+<h3><span id="二维数组">二维数组</span></h3><h4><span id="创建和初始化">创建和初始化</span></h4><p>格式一：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] arr = <span class="keyword">new</span> <span class="keyword">int</span>[][]&#123;&#123;<span class="number">3</span>,<span class="number">8</span>,<span class="number">2</span>&#125;,&#123;<span class="number">2</span>,<span class="number">7</span>&#125;,&#123;<span class="number">9</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">6</span>&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>格式二：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[][]=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][<span class="number">4</span>];</span><br></pre></td></tr></table></figure>
+
+<p>格式三：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] arr=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][];</span><br></pre></td></tr></table></figure>
+
+<h4><span id="遍历">遍历</span></h4><p>两个循环遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">erwei</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">0</span>; i1 &lt; <span class="keyword">this</span>.arr[i].length; i1++) &#123;</span><br><span class="line">            <span class="keyword">this</span>.arr[i][i1]=i+i1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">0</span>; i1 &lt; <span class="keyword">this</span>.arr[i].length; i1++) &#123;</span><br><span class="line">            System.out.println(<span class="keyword">this</span>.arr[i][i1]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="数组的操作工具类arrays">数组的操作工具类Arrays</span></h3><h4><span id="数组的填充fill">数组的填充fill()</span></h4><p>用于快速赋值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myArrays</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//数组填充fill()</span></span><br><span class="line">    <span class="keyword">int</span>[]  myarr= <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">    Arrays.fill(myarr,<span class="number">3</span>);<span class="comment">//给数组全部赋3</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; myarr.length; i++) &#123;</span><br><span class="line">        System.out.print(myarr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.fill(myarr,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>);<span class="comment">//给下标为123的赋值2</span></span><br><span class="line">    System.out.println();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; myarr.length; i++) &#123;</span><br><span class="line">        System.out.print(myarr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="数组的复制">数组的复制</span></h4><p>arraycopy</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myArrays</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//数组填充fill()</span></span><br><span class="line">    <span class="keyword">int</span>[]  myarr= <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">    Arrays.fill(myarr,<span class="number">3</span>);</span><br><span class="line">    System.out.println(Arrays.toString(myarr));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; myarr.length; i++) &#123;</span><br><span class="line">        System.out.print(myarr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.fill(myarr,<span class="number">1</span>,<span class="number">4</span>,<span class="number">2</span>);</span><br><span class="line">    System.out.println();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; myarr.length; i++) &#123;</span><br><span class="line">        System.out.print(myarr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//数组的复制arraycopy</span></span><br><span class="line">    <span class="keyword">int</span>[] myarr2=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">    System.arraycopy(myarr,<span class="number">1</span>,myarr2,<span class="number">0</span>,<span class="number">4</span>);<span class="comment">//将myarr复制到myarr2，从myarr的1下标开始，复制到myarr2的0下标，复制长度为4</span></span><br><span class="line">    System.out.println(Arrays.toString(myarr2));</span><br><span class="line">    System.out.println(Arrays.equals(myarr,myarr2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>copyof</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] copyOf = Arrays.copyOf(myarr, <span class="number">4</span>);<span class="comment">//复制myarr的四位到新数组</span></span><br><span class="line">System.out.println(Arrays.toString(copyOf));</span><br></pre></td></tr></table></figure>
+
+<p>copyOfRange</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组的复制copyofrange</span></span><br><span class="line"><span class="keyword">int</span>[] copyOfrange = Arrays.copyOfRange(myarr, <span class="number">1</span>,<span class="number">6</span>);<span class="comment">//复制下标1到下标6，6可以超出数组长度</span></span><br><span class="line">System.out.println(Arrays.toString(copyOfrange));</span><br></pre></td></tr></table></figure>
+
+<h4><span id="数组的比较equals">数组的比较equals</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Arrays.equals(myarr,myarr2));</span><br></pre></td></tr></table></figure>
+
+<h4><span id="数组的排序">数组的排序</span></h4><p>快排sort</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sort快排</span></span><br><span class="line"><span class="keyword">int</span>[] ints = &#123;<span class="number">3</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] mysort = &#123;<span class="number">3</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">0</span>&#125;;</span><br><span class="line">Arrays.sort(ints);</span><br><span class="line">System.out.println(Arrays.toString(ints));<span class="comment">//[0, 2, 3, 4, 7, 8, 9]</span></span><br><span class="line">Arrays.sort(mysort,<span class="number">0</span>,<span class="number">4</span>);</span><br><span class="line">System.out.println(Arrays.toString(mysort));<span class="comment">//[2, 3, 4, 8, 9, 7, 0]</span></span><br></pre></td></tr></table></figure>
+
+<p>冒泡排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//冒泡排序</span></span><br><span class="line"><span class="keyword">int</span>[] ints1 = &#123;<span class="number">4</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> temp;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ints1.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j=i;j&lt;ints1.length;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ints1[i]&gt;ints1[j])&#123;</span><br><span class="line">            temp=ints1[i];</span><br><span class="line">            ints1[i]=ints1[j];</span><br><span class="line">            ints1[j]=temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(Arrays.toString(ints1));</span><br></pre></td></tr></table></figure>
+
+<h4><span id="查找数组元素binarysearch">查找数组元素binarySearch</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//binarySearch</span></span><br><span class="line">System.out.println(Arrays.binarySearch(ints1, <span class="number">4</span>));</span><br></pre></td></tr></table></figure>
+
+<p>就是二分查找，必须要先将数组排序</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

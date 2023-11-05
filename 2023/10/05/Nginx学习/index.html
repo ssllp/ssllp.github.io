@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nginx学习 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Nginx学习Nginx介绍
+Nginx 是一个高性能的HTTP和反向代理web服务器，常用于高并发场景，性能为王。
+
+优点：
+
+速度快，支持高并发
+配置简单，扩展性强
+高可靠
+热部署
+
+常用功能模,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Nginx学习 - Hexo"/>
+    <meta name="twitter:description" content="Nginx学习Nginx介绍
+Nginx 是一个高性能的HTTP和反向代理web服务器，常用于高并发场景，性能为王。
+
+优点：
+
+速度快，支持高并发
+配置简单，扩展性强
+高可靠
+热部署
+
+常用功能模,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Nginx学习 - Hexo"/>
+    <meta property="og:description" content="Nginx学习Nginx介绍
+Nginx 是一个高性能的HTTP和反向代理web服务器，常用于高并发场景，性能为王。
+
+优点：
+
+速度快，支持高并发
+配置简单，扩展性强
+高可靠
+热部署
+
+常用功能模,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://ssllp.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Nginx学习</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Nginx学习</h1>
+        <div class="stuff">
+            <span>十月 05, 2023</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1><span id="nginx学习">Nginx学习</span></h1><h2><span id="nginx介绍">Nginx介绍</span></h2><blockquote>
+<p>Nginx 是一个高性能的HTTP和反向代理web服务器，常用于高并发场景，性能为王。</p>
+</blockquote>
+<p>优点：</p>
+<ul>
+<li>速度快，支持高并发</li>
+<li>配置简单，扩展性强</li>
+<li>高可靠</li>
+<li>热部署</li>
+</ul>
+<p>常用功能模块</p>
+<ul>
+<li>负载均衡</li>
+<li>反向代理</li>
+<li>动静分离</li>
+</ul>
+<h3><span id="正向代理和反向代理">正向代理和反向代理</span></h3><blockquote>
+<p>正向代理作用于客户端，客户端通过代理服务器来进行互联网访问，我们使用的VPN就是正向代理。</p>
+<p>反向代理作用于服务端，用户对反向代理是无感知的，只需要将请求发送到代理服务器，代理服务器就会分发请求访问服务端，可以隐藏真实服务器。</p>
+<p><img src="/2023/10/05/Nginx%E5%AD%A6%E4%B9%A0/image-20231005172450023.png" alt="image-20231005172450023"></p>
+<p><img src="/2023/10/05/Nginx%E5%AD%A6%E4%B9%A0/image-20231005202048496.png" alt="image-20231005202048496"></p>
+</blockquote>
+<h3><span id="负载均衡和动静分离">负载均衡和动静分离</span></h3><blockquote>
+<p>负载均衡就是通过增加服务器数量，将原本作用在一个服务器上的请求分发到多个服务器上，将负载分发，就是所谓的负载均衡。</p>
+<p>动静分离是指将动态资源和静态资源分别部署到不同的服务器上，将静态请求和动态请求分发给不同的服务器，一般由两种方式来实现</p>
+</blockquote>
+<h2><span id="docker配置nginx">Docker配置Nginx</span></h2><blockquote>
+<p>创建/home/docker/nginx/conf、www、logs</p>
+<p>先运行一个Nginx容器，将配置文件下载下来</p>
+<p>docker run -d –name nginx -p 80:80 nginx</p>
+<p>docker cp 容器id:/etc/nginx/nginx.conf /home/docker/nginx/conf</p>
+<p>之后删除测试容器</p>
+<p>docker rm -f nginx</p>
+<p>重新创建容器，进行数据卷挂载</p>
+<p>docker run -d -p 80:80 -p 9001:9001  –name nginx -v /home/docker/nginx/www:/usr/share/nginx/html -v /home/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /home/docker/nginx/logs:/var/log/nginx nginx</p>
+</blockquote>
+<h2><span id="nginx反向代理">Nginx反向代理</span></h2><blockquote>
+<p>实现效果：浏览器访问<a target="_blank" rel="noopener" href="http://www.123.com,访问到虚拟机中的spring项目8081/">www.123.com，访问到虚拟机中的spring项目8081</a></p>
+<ul>
+<li><p>修改hosts中文件，配置本地dns。C:\Windows\System32\drivers\etc</p>
+</li>
+<li><p>配置nginx.conf文件</p>
+<p>server {</p>
+<pre><code>    listen      80;
+    server_name 192.168.64.128;
+    location / &#123;
+        root   html;
+        proxy_pass  http://192.168.64.128:8081;
+        index  index.html index.htm;
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>重新启动Nginx就可以实现访问<a target="_blank" rel="noopener" href="http://www.123.com就是访问8081了./">www.123.com就是访问8081了。</a></p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>使用反向代理，根据不同的路径跳转到不同的服务端口</p>
+<p>访问<a target="_blank" rel="noopener" href="http://www.123.com/ssl/hello">www.123.com/ssl/hello</a> 和<a target="_blank" rel="noopener" href="http://www.123.com/ptsnake/hello">www.123.com/ptsnake/hello</a> 分别对应8081和8082的springboot</p>
+<p>server {<br>        listen     80;<br>        server_name 192.168.64.128;<br>        location / {<br>            root   html;<br>            proxy_pass  <a target="_blank" rel="noopener" href="http://192.168.64.128:8081/">http://192.168.64.128:8081</a>;<br>            index  index.html index.htm;<br>        }<br>        location  /ssl {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8081/">http://192.168.64.128:8081</a>;<br>        }<br>        location  /ptsnake {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8082/">http://192.168.64.128:8082</a>;<br>        }<br>    }</p>
+</blockquote>
+<h2><span id="nginx负载均衡">Nginx负载均衡</span></h2><blockquote>
+<p>效果：访问<a target="_blank" rel="noopener" href="http://www.123.com/hello%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84%E8%AF%B7%E6%B1%82%E5%88%86%E5%8F%91%E5%88%B08081%E5%92%8C8082%E9%83%A8%E7%BD%B2%E7%9A%84%E4%B8%A4%E5%8F%B0%E4%B8%8A%E3%80%82">www.123.com/hello，这样的请求分发到8081和8082部署的两台上。</a></p>
+<p>修改nginx.conf文件</p>
+<p>upstream myserver {<br>        server 192.168.64.128:8081;<br>        server 192.168.64.128:8082;<br>    }<br>    server {<br>        listen     80;<br>        server_name 192.168.64.128;<br>        location / {<br>            root   html;<br>            proxy_pass  <a target="_blank" rel="noopener" href="http://myserver/">http://myserver</a>;<br>            index  index.html index.htm;<br>        }<br>       location  /ssl {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8081/">http://192.168.64.128:8081</a>;<br>        }<br>        location  /ptsnake {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8082/">http://192.168.64.128:8082</a>;<br>        }<br>    }</p>
+<p>效果：</p>
+<img src="/2023/10/05/Nginx%E5%AD%A6%E4%B9%A0/image-20231006153222989.png" alt="image-20231006153222989" style="zoom: 67%;"> 
+
+<img src="/2023/10/05/Nginx%E5%AD%A6%E4%B9%A0/image-20231006153406122.png" alt="image-20231006153406122" style="zoom:67%;"> 
+</blockquote>
+<blockquote>
+<p>Nginx的负载均衡有几种方式</p>
+<ul>
+<li><p>默认使用轮询的方案，每个请求会按时间顺序逐一分配到服务器，如果服务器宕机，会自动剔除</p>
+</li>
+<li><p>weight权重策略，可以给性能较好的服务器设置较高的权重，权重设置的越高，则服务器接收的请求越多</p>
+<p>upstream myserver{</p>
+<p>​    server 192.168.64.128:8081 weight=5;</p>
+<p>​    server 192.168.64.128:8082 weight=10;</p>
+<p>}</p>
+</li>
+<li><p>ip_hash 这种方式会根据ip计算的hash值来访问固定的服务器，可以解决session问题</p>
+<p>upstream myserver{</p>
+<p>​    ip_hash;</p>
+<p>​    server 192.168.64.128:8081;</p>
+<p>​    server 192.168.64.128:8082;</p>
+<p>}</p>
+</li>
+<li><p>fair 根据响应时间来分配，响应越快的优先级越高</p>
+<p>upstream myserver{</p>
+<p>​    server 192.168.64.128:8081;</p>
+<p>​    server 192.168.64.128:8082;</p>
+<p>​    fair;</p>
+<p>}</p>
+</li>
+</ul>
+</blockquote>
+<h2><span id="nginx-动静分离">Nginx 动静分离</span></h2><blockquote>
+<p>将静态资源部署给Nginx实现动静分离</p>
+<p>修改nginx.conf文件</p>
+<p>server {<br>        listen     80;<br>        server_name 192.168.64.128;<br>        location / {<br>            root   html;<br>            proxy_pass  <a target="_blank" rel="noopener" href="http://myserver/">http://myserver</a>;<br>            index  index.html index.htm;<br>        }<br>    location  /image/ {<br>        root   /usr/share/nginx/html/static/;<br>        autoindex on;<br>    }<br>    location /html/ {<br>            root   /usr/share/nginx/html/static/;<br>    }<br>    location  /ssl {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8081/">http://192.168.64.128:8081</a>;<br>        }<br>        location  /ptsnake {<br>            proxy_pass <a target="_blank" rel="noopener" href="http://192.168.64.128:8082/">http://192.168.64.128:8082</a>;<br>        }<br>    }</p>
+<p>如果路径有image或者html，就会到static目录下去寻找，这些静态资源是部署在Nginx下的，如果是用docker部署Nginx的话则是需要挂载数据卷。</p>
+<p>解读：</p>
+<p>conf文件中比较重要的区域就是http块，反向代理、负载均衡和动静分离都是在http中配置的。</p>
+<p>在server块中，listen指定监听端口，server_name指定服务名称，可以是域名或者Nginx的ip，location用于配置路由，符合路由的这些请求都将转发，root指定文件夹，如果符合location的路径，则会在文件夹下寻找文件，proxy_pass用于做反向代理，将请求转发到目标服务器，index指定默认界面，实现负载均衡则是要用到upstream块，在其中配置服务ip和负载均衡策略，分别是轮询、权重、ip_hash、fair。</p>
+</blockquote>
+<h2><span id="nginx集群">Nginx集群</span></h2><blockquote>
+<p>防止Nginx宕机导致服务无法正常进行，所以要搭建高可用集群</p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

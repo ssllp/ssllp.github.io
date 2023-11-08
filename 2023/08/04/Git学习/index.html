@@ -353,7 +353,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Git学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">配置用户名和邮箱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">本地仓库初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.3.</span> <span class="toc-text">基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.3.1.</span> <span class="toc-text">查看状态，add，commit，log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.3.2.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.3.3.</span> <span class="toc-text">忽略文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text">分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.5.</span> <span class="toc-text">远程仓库</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">Git学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1"><span class="toc-number">1.1.</span> <span class="toc-text">配置用户名和邮箱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">本地仓库初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81%EF%BC%8Cadd%EF%BC%8Ccommit%EF%BC%8Clog"><span class="toc-number">1.3.1.</span> <span class="toc-text">查看状态，add，commit，log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">1.3.2.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.3.</span> <span class="toc-text">忽略文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-number">1.4.</span> <span class="toc-text">分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.5.</span> <span class="toc-text">远程仓库</span></a></li></ol></li></ol>
     </nav>
   </div>
 </aside>
@@ -400,25 +400,25 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1><span id="git学习">Git学习</span></h1><ul>
+        <h1 id="Git学习"><a href="#Git学习" class="headerlink" title="Git学习"></a>Git学习</h1><ul>
 <li>版本控制工具</li>
 <li>帮助我们回滚以及溯源代码</li>
 <li>防止磁盘损坏导致代码丢失</li>
 </ul>
-<h2><span id="配置用户名和邮箱">配置用户名和邮箱</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名</span><br><span class="line">git config --global user.email 邮箱</span><br></pre></td></tr></table></figure>
+<h2 id="配置用户名和邮箱"><a href="#配置用户名和邮箱" class="headerlink" title="配置用户名和邮箱"></a>配置用户名和邮箱</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名</span><br><span class="line">git config --global user.email 邮箱</span><br></pre></td></tr></table></figure>
 
-<h2><span id="本地仓库初始化">本地仓库初始化</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<h2 id="本地仓库初始化"><a href="#本地仓库初始化" class="headerlink" title="本地仓库初始化"></a>本地仓库初始化</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 
-<h2><span id="基本命令">基本命令</span></h2><h3><span id="查看状态addcommitlog">查看状态，add，commit，log</span></h3><p><img src="/2023/08/04/Git%E5%AD%A6%E4%B9%A0/image-20230804162236679.png" alt="image-20230804162236679"></p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h3 id="查看状态，add，commit，log"><a href="#查看状态，add，commit，log" class="headerlink" title="查看状态，add，commit，log"></a>查看状态，add，commit，log</h3><p><img src="/2023/08/04/Git%E5%AD%A6%E4%B9%A0/image-20230804162236679.png" alt="image-20230804162236679"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git status //查看修改状态，是在工作区还是暂存区</span><br><span class="line">git commit -m <span class="string">&quot;第一次提交&quot;</span></span><br><span class="line">git <span class="built_in">log</span> [options] //查看日志</span><br></pre></td></tr></table></figure>
 
 <p>git log 后面可以跟选项。-all是显示所有分支，-pretty=online 是将信息显示为一行，-abbrev-commit是让输出的信息更为简短有点</p>
 <p>可以直接去配置别名</p>
-<h3><span id="版本回退">版本回退</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commitid //版本回退</span><br><span class="line">git relog //查看已经删除的提交记录</span><br></pre></td></tr></table></figure>
+<h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commitid //版本回退</span><br><span class="line">git relog //查看已经删除的提交记录</span><br></pre></td></tr></table></figure>
 
-<h3><span id="忽略文件">忽略文件</span></h3><p>创建.gitignore文件</p>
+<h3 id="忽略文件"><a href="#忽略文件" class="headerlink" title="忽略文件"></a>忽略文件</h3><p>创建.gitignore文件</p>
 <p>里面指定不被git管理的文件</p>
-<h2><span id="分支">分支</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git branch 查看分支</span><br><span class="line">git branch xxx 创建分支</span><br><span class="line">git checkout xxx 切换分支</span><br><span class="line">git checkout -b xxx 创建并切换分支</span><br><span class="line">git merge xxx 合并分支</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git branch 查看分支</span><br><span class="line">git branch xxx 创建分支</span><br><span class="line">git checkout xxx 切换分支</span><br><span class="line">git checkout -b xxx 创建并切换分支</span><br><span class="line">git merge xxx 合并分支</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>解决分支冲突</p>
 <p>两个分支对文件的修改有冲突，例如修改了同一文件的同一行，这时候就要手动解决冲突。</p>
@@ -427,7 +427,7 @@
 <li>add</li>
 <li>commit</li>
 </ol>
-<h2><span id="远程仓库">远程仓库</span></h2>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2>
       
     </div>
     <div class="article-footer">

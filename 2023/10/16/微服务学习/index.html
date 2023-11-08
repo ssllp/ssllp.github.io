@@ -28,8 +28,8 @@
 <meta property="article:published_time" content="2023-10-16T06:46:10.000Z">
 <meta property="article:modified_time" content="2023-11-08T07:00:23.795Z">
 <meta property="article:author" content="ssl">
-<meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
 <meta property="article:tag" content="SpringCloud">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -352,7 +352,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">微服务学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">微服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.1.</span> <span class="toc-text">拆分原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.2.</span> <span class="toc-text">远程调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.3.</span> <span class="toc-text">Nacos注册中心</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">微服务学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">微服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%86%E5%88%86%E5%8E%9F%E5%88%99"><span class="toc-number">1.1.1.</span> <span class="toc-text">拆分原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="toc-number">1.1.2.</span> <span class="toc-text">远程调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nacos%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="toc-number">1.1.3.</span> <span class="toc-text">Nacos注册中心</span></a></li></ol></li></ol></li></ol>
     </nav>
   </div>
 </aside>
@@ -399,10 +399,10 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1><span id="微服务学习">微服务学习</span></h1><h2><span id="微服务">微服务</span></h2><blockquote>
+        <h1 id="微服务学习"><a href="#微服务学习" class="headerlink" title="微服务学习"></a>微服务学习</h1><h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><blockquote>
 <p>单体架构比较简单，小系统的开发成本较小，但不适合大型服务，会导致开发耦合度高，不易于团队合作，影响系统的可用性，微服务就比较适合开发大型复杂的项目。SpringCloud是Spring家族的成员，继承了其他的微服务实现，由于其强大的自动配置所以可以很好的集成第三方框架，使用广泛。</p>
 </blockquote>
-<h3><span id="拆分原则">拆分原则</span></h3><blockquote>
+<h3 id="拆分原则"><a href="#拆分原则" class="headerlink" title="拆分原则"></a>拆分原则</h3><blockquote>
 <p>高内聚，每个微服务的职责要尽量统一，包含的业务相互关联度高、完整度高。</p>
 <p>低耦合，每个微服务的功能要相对独立，尽量减少对其他微服务的依赖。</p>
 <p>提高关联度，降低依赖。</p>
@@ -410,11 +410,11 @@
 <p>横向拆分：抽取公共服务、提高复用性</p>
 <p>一般是进行业务拆分，新建模块部署业务即可</p>
 </blockquote>
-<h3><span id="远程调用">远程调用</span></h3><blockquote>
+<h3 id="远程调用"><a href="#远程调用" class="headerlink" title="远程调用"></a>远程调用</h3><blockquote>
 <p>当我们要调用其他模块的业务时，我们就需要使用到远程调用，通过网络的方式获得响应来让业务正常进行。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//需要用到RestTemplate进行远程调用，比如</span></span><br><span class="line">ResponseEntity&lt;List&lt;ItemDTO&gt;&gt; respose = restTemplate.exchange(<span class="string">&quot;http://localhost:8081/items?ids=&#123;ids&#125;&quot;</span>,</span><br><span class="line">                HttpMethod.GET,</span><br><span class="line">                <span class="keyword">null</span>,</span><br><span class="line">                <span class="keyword">new</span> ParameterizedTypeReference&lt;List&lt;ItemDTO&gt;&gt;() &#123;</span><br><span class="line">                &#125;, Map.of(<span class="string">&quot;ids&quot;</span>, CollUtil.join(itemIds, <span class="string">&quot;,&quot;</span>)));</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h3><span id="nacos注册中心">Nacos注册中心</span></h3><blockquote>
+<h3 id="Nacos注册中心"><a href="#Nacos注册中心" class="headerlink" title="Nacos注册中心"></a>Nacos注册中心</h3><blockquote>
 <p>为了方便找到服务和消费者，所以要使用注册中心。这里使用Nacos</p>
 </blockquote>
 

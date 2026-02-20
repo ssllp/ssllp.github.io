@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Sentinel学习 | Hexo</title>
+  <meta name="description" content="Sentinel 学习与使用文档本文档从背景、作用、使用方式与业务场景等方面介绍阿里巴巴开源的 Sentinel，便于系统学习与落地使用。  一、背景1.1 微服务下的稳定性问题随着架构从单体拆成微服务，系统会面临：  流量不可控：大促、爬虫、恶意刷接口导致 QPS 暴增，下游或本机被打挂。 依赖故障扩散：某个下游服务变慢或宕机，调用方线程被占满、超时堆积，最终整条调用链雪崩。 资源争抢：少数热点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sentinel学习">
+<meta property="og:url" content="https://ssllp.github.io/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Sentinel 学习与使用文档本文档从背景、作用、使用方式与业务场景等方面介绍阿里巴巴开源的 Sentinel，便于系统学习与落地使用。  一、背景1.1 微服务下的稳定性问题随着架构从单体拆成微服务，系统会面临：  流量不可控：大促、爬虫、恶意刷接口导致 QPS 暴增，下游或本机被打挂。 依赖故障扩散：某个下游服务变慢或宕机，调用方线程被占满、超时堆积，最终整条调用链雪崩。 资源争抢：少数热点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-20T03:14:17.000Z">
+<meta property="article:modified_time" content="2026-02-20T03:52:09.934Z">
+<meta property="article:author" content="ssl">
+<meta property="article:tag" content="Sentinel">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ssllp.github.io/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ssllp" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">ssllp</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java开发</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> ChengDu, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ssllp" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/">Java学习</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">微服务学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">微服务学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/">运维部署</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FilmOnline/" rel="tag">FilmOnline</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RqbbitMQ/" rel="tag">RqbbitMQ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentinel/" rel="tag">Sentinel</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/" rel="tag">SpringCloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Docker/" style="font-size: 13px;">Docker</a> <a href="/tags/FilmOnline/" style="font-size: 13px;">FilmOnline</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/Mysql/" style="font-size: 13px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 13px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 13px;">Redis</a> <a href="/tags/RqbbitMQ/" style="font-size: 13px;">RqbbitMQ</a> <a href="/tags/Sentinel/" style="font-size: 13px;">Sentinel</a> <a href="/tags/Spring/" style="font-size: 13.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 13px;">SpringCloud</a> <a href="/tags/Vue/" style="font-size: 13px;">Vue</a> <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 13px;">微服务</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 13px;">消息队列</a> <a href="/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 14px;">运维</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 13px;">面试</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">微服务学习</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/" class="title">Sentinel学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-02-20T03:14:17.000Z" itemprop="datePublished">2026-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/">Java学习</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">微服务学习</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/11/11/RabbitMQ%E5%AD%A6%E4%B9%A0/" class="title">RabbitMQ学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-11-11T08:15:09.000Z" itemprop="datePublished">2023-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/">Java学习</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/23/SpringBoot%E5%AD%A6%E4%B9%A0/" class="title">SpringBoot学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-23T08:08:26.000Z" itemprop="datePublished">2023-10-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/">Java学习</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/16/Redis%E5%AD%A6%E4%B9%A0/" class="title">Redis学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-16T08:15:29.000Z" itemprop="datePublished">2023-10-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java%E5%AD%A6%E4%B9%A0/">Java学习</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/16/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/" class="title">微服务学习</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-16T06:46:10.000Z" itemprop="datePublished">2023-10-16</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sentinel-%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3"><span class="toc-number">1.</span> <span class="toc-text">Sentinel 学习与使用文档</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一、背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8B%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 微服务下的稳定性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Sentinel-%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Sentinel 的由来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E3%80%8C%E8%B5%84%E6%BA%90%E3%80%8D%E4%B8%8E%E3%80%8C%E8%A7%84%E5%88%99%E3%80%8D%E5%88%86%E7%A6%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 为什么需要「资源」与「规则」分离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%9C%E7%94%A8%E6%A6%82%E8%A7%88"><span class="toc-number">1.2.</span> <span class="toc-text">二、作用概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%88%E5%BF%85%E7%9F%A5%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、核心概念（必知）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%B5%84%E6%BA%90%EF%BC%88Resource%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 资源（Resource）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%85%A5%E5%8F%A3%EF%BC%88Entry%EF%BC%89%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88Context%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 入口（Entry）与上下文（Context）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%99%90%E6%B5%81%EF%BC%88Flow-Control%EF%BC%89%E4%B8%8E%E7%86%94%E6%96%AD%EF%BC%88Circuit-Breaking%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 限流（Flow Control）与熔断（Circuit Breaking）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-blockHandler-%E4%B8%8E-fallback"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 blockHandler 与 fallback</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%99%90%E6%B5%81%EF%BC%9A%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">四、限流：概念与使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%99%90%E6%B5%81%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 限流相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A-SentinelResource%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%A8%E4%BA%8E%E3%80%8C%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%E4%B8%80%E4%B8%AA%E8%B5%84%E6%BA%90%E3%80%8D%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 使用方式一：@SentinelResource（推荐用于「一个方法一个资源」）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9ASphU-entry%EF%BC%88%E9%80%82%E5%90%88%E7%BB%86%E7%B2%92%E5%BA%A6%E3%80%81%E5%A4%9A%E8%B5%84%E6%BA%90%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 使用方式二：SphU.entry（适合细粒度、多资源）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 业务场景示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7%EF%BC%9A%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">五、熔断降级：概念与使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%86%94%E6%96%AD%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 熔断相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%88%E4%B8%8E%E9%99%90%E6%B5%81%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E5%A5%97%E8%B5%84%E6%BA%90%E5%AE%9A%E4%B9%89%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 使用方式（与限流共用同一套资源定义）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 业务场景示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E4%B8%8E-Feign-%E7%BB%93%E5%90%88%E8%AF%B4%E6%98%8E"><span class="toc-number">1.5.4.</span> <span class="toc-text">5.4 与 Feign 结合说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%A6%81%E7%82%B9"><span class="toc-number">1.6.</span> <span class="toc-text">六、控制台与配置要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%8E%A7%E5%88%B6%E5%8F%B0%EF%BC%88Dashboard%EF%BC%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 控制台（Dashboard）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E9%A1%B9%EF%BC%88application-properties-yaml%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 常用配置项（application.properties &#x2F; yaml）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B0%8F%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">七、小结</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Sentinel学习" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Sentinel学习
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/" class="article-date">
+	  <time datetime="2026-02-20T03:14:17.000Z" itemprop="datePublished">2026-02-20</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/">微服务学习</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Sentinel/" rel="tag">Sentinel</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Sentinel-学习与使用文档"><a href="#Sentinel-学习与使用文档" class="headerlink" title="Sentinel 学习与使用文档"></a>Sentinel 学习与使用文档</h1><p>本文档从背景、作用、使用方式与业务场景等方面介绍阿里巴巴开源的 <strong>Sentinel</strong>，便于系统学习与落地使用。</p>
+<hr>
+<h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><h3 id="1-1-微服务下的稳定性问题"><a href="#1-1-微服务下的稳定性问题" class="headerlink" title="1.1 微服务下的稳定性问题"></a>1.1 微服务下的稳定性问题</h3><p>随着架构从单体拆成微服务，系统会面临：</p>
+<ul>
+<li><strong>流量不可控</strong>：大促、爬虫、恶意刷接口导致 QPS 暴增，下游或本机被打挂。</li>
+<li><strong>依赖故障扩散</strong>：某个下游服务变慢或宕机，调用方线程被占满、超时堆积，最终整条调用链雪崩。</li>
+<li><strong>资源争抢</strong>：少数热点 key 或慢 SQL 占满连接/线程，影响其他请求。</li>
+</ul>
+<p>若没有统一的「流量与稳定性」治理手段，只能靠人工扩容、重启或下线，无法在运行时按规则自动限流、熔断与降级。</p>
+<h3 id="1-2-Sentinel-的由来"><a href="#1-2-Sentinel-的由来" class="headerlink" title="1.2 Sentinel 的由来"></a>1.2 Sentinel 的由来</h3><ul>
+<li><strong>Sentinel</strong> 是阿里巴巴开源的<strong>面向分布式服务架构的流量治理与熔断降级组件</strong>，前身经历过多年双十一等大促验证。</li>
+<li>与 Hystrix 等相比，Sentinel 以<strong>资源</strong>为核心，支持<strong>限流、熔断、系统保护、热点与授权</strong>等多种规则，并提供<strong>实时监控与控制台</strong>，规则可动态配置、即时生效。</li>
+<li>在 Spring Cloud 体系中常与 <strong>Spring Cloud Alibaba</strong> 一起使用，对 Web、Feign、Dubbo 等都有适配。</li>
+</ul>
+<h3 id="1-3-为什么需要「资源」与「规则」分离"><a href="#1-3-为什么需要「资源」与「规则」分离" class="headerlink" title="1.3 为什么需要「资源」与「规则」分离"></a>1.3 为什么需要「资源」与「规则」分离</h3><ul>
+<li>业务代码只声明<strong>哪些是受保护的资源</strong>（一个 URL、一个方法、一次 RPC 等）。</li>
+<li><strong>限流/熔断的阈值、策略</strong>放在控制台或配置中心，可随时调整，无需改代码、重启。</li>
+<li>这样既保证运行时可控，又便于按环境（开发/预发/生产）区分策略。</li>
+</ul>
+<hr>
+<h2 id="二、作用概览"><a href="#二、作用概览" class="headerlink" title="二、作用概览"></a>二、作用概览</h2><p>Sentinel 主要解决以下几类问题，对应不同「规则」与「使用方式」。</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>解决的问题</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>限流</strong></td>
+<td>流量超过承载能力导致服务不可用</td>
+<td>接口 QPS/并发控制、防刷、秒杀</td>
+</tr>
+<tr>
+<td><strong>熔断降级</strong></td>
+<td>下游异常/慢调用导致雪崩</td>
+<td>Feign 调用、DB/Redis、慢方法</td>
+</tr>
+<tr>
+<td><strong>系统保护</strong></td>
+<td>CPU、负载、入口 QPS 等系统级过载</td>
+<td>根据系统水位自动拒绝部分请求</td>
+</tr>
+<tr>
+<td><strong>热点参数</strong></td>
+<td>少数参数（如某个 userId）占满资源</td>
+<td>热点 key、大促热点商品</td>
+</tr>
+<tr>
+<td><strong>授权/黑白名单</strong></td>
+<td>只允许/禁止特定来源访问某资源</td>
+<td>内部接口只允许网关或特定服务</td>
+</tr>
+</tbody></table>
+<p>日常使用最多的是 <strong>限流</strong> 和 <strong>熔断降级</strong>，下文重点介绍这两部分的概念与使用方式。</p>
+<hr>
+<h2 id="三、核心概念（必知）"><a href="#三、核心概念（必知）" class="headerlink" title="三、核心概念（必知）"></a>三、核心概念（必知）</h2><h3 id="3-1-资源（Resource）"><a href="#3-1-资源（Resource）" class="headerlink" title="3.1 资源（Resource）"></a>3.1 资源（Resource）</h3><ul>
+<li><strong>资源</strong>是 Sentinel 里被保护的最小单位，可以是：<ul>
+<li>一个 URL（如 Web 适配器自动为每个请求生成的 <code>GET:/api/xxx</code>）</li>
+<li>一个方法上的 <code>@SentinelResource(value = &quot;xxx&quot;)</code></li>
+<li>一段代码里的 <code>SphU.entry(&quot;xxx&quot;)</code></li>
+</ul>
+</li>
+<li>所有<strong>限流、熔断等规则都是按「资源名」配置</strong>的，控制台里看到的「簇点链路」就是已出现过的资源。</li>
+</ul>
+<h3 id="3-2-入口（Entry）与上下文（Context）"><a href="#3-2-入口（Entry）与上下文（Context）" class="headerlink" title="3.2 入口（Entry）与上下文（Context）"></a>3.2 入口（Entry）与上下文（Context）</h3><ul>
+<li>每次请求会有一个 <strong>Context</strong>，其中<strong>第一次</strong> <code>entry(资源名)</code> 对应的资源称为该请求的<strong>入口</strong>。</li>
+<li><strong>链路流控</strong>依赖「入口」：同一资源从不同入口进来，可以配置不同的限流阈值（例如普通入口 10 QPS，VIP 入口 2 QPS）。</li>
+<li>若 Web 适配器先对 URL 做了 entry，则<strong>入口往往是 URL 资源</strong>，而不是你在代码里再写的 <code>entrance_xxx</code>，配置链路规则时需注意「入口资源」要填控制台里实际看到的第一个资源。</li>
+</ul>
+<h3 id="3-3-限流（Flow-Control）与熔断（Circuit-Breaking）"><a href="#3-3-限流（Flow-Control）与熔断（Circuit-Breaking）" class="headerlink" title="3.3 限流（Flow Control）与熔断（Circuit Breaking）"></a>3.3 限流（Flow Control）与熔断（Circuit Breaking）</h3><ul>
+<li><strong>限流</strong>：当某个资源的 QPS 或并发线程数超过规则阈值时，<strong>立即拒绝</strong>（或排队/预热），不执行业务逻辑，返回 block 结果。</li>
+<li><strong>熔断</strong>：当某个资源的<strong>异常比例、慢调用比例或异常数</strong>超过规则阈值时，Sentinel 会在一段时间内<strong>认为该资源不可用</strong>，这段时间内请求<strong>不再进入该资源</strong>，直接走 block（降级），避免继续打挂下游；过了熔断时长后会进入「半开」试探是否恢复。</li>
+</ul>
+<h3 id="3-4-blockHandler-与-fallback"><a href="#3-4-blockHandler-与-fallback" class="headerlink" title="3.4 blockHandler 与 fallback"></a>3.4 blockHandler 与 fallback</h3><ul>
+<li><strong>blockHandler</strong>：被<strong>限流或熔断</strong>时调用（对应 <code>BlockException</code>），用于返回「请求被拒绝/服务降级」等统一结果。</li>
+<li><strong>fallback</strong>：方法<strong>内部抛业务异常</strong>时调用，用于返回兜底结果或错误信息；若希望「异常也参与熔断统计」，应在方法里抛异常，由 fallback 做降级返回。</li>
+</ul>
+<hr>
+<h2 id="四、限流：概念与使用"><a href="#四、限流：概念与使用" class="headerlink" title="四、限流：概念与使用"></a>四、限流：概念与使用</h2><h3 id="4-1-限流相关概念"><a href="#4-1-限流相关概念" class="headerlink" title="4.1 限流相关概念"></a>4.1 限流相关概念</h3><ul>
+<li><strong>QPS 限流</strong>：每秒允许通过该资源的请求数上限，超过则拒绝（或按流控效果排队/预热）。</li>
+<li><strong>并发线程数限流</strong>：同时执行该资源的线程数上限，超过则拒绝，适合保护「慢接口」不被太多线程占满。</li>
+<li><strong>流控模式</strong>：<ul>
+<li><strong>直接</strong>：只针对当前资源本身做阈值判断。</li>
+<li><strong>关联</strong>：当「关联资源」的 QPS 达到阈值时，限制当前资源（例如写接口受读接口流量影响）。</li>
+<li><strong>链路</strong>：根据「入口资源」区分，同一资源从不同入口进来可设不同阈值（需 <code>web-context-unify=false</code>，且入口为实际第一个 entry 的资源名）。</li>
+</ul>
+</li>
+<li><strong>流控效果</strong>：<ul>
+<li><strong>快速失败</strong>：超限直接拒绝。</li>
+<li><strong>Warm Up</strong>：从较小阈值逐渐升到设定 QPS，避免冷启动被打满。</li>
+<li><strong>排队等待</strong>：超限请求排队，在超时时间内等待，适合允许一定延迟的场景。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-使用方式一：-SentinelResource（推荐用于「一个方法一个资源」）"><a href="#4-2-使用方式一：-SentinelResource（推荐用于「一个方法一个资源」）" class="headerlink" title="4.2 使用方式一：@SentinelResource（推荐用于「一个方法一个资源」）"></a>4.2 使用方式一：@SentinelResource（推荐用于「一个方法一个资源」）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/api/example&quot;)</span></span><br><span class="line"><span class="meta">@SentinelResource(</span></span><br><span class="line"><span class="meta">    value = &quot;example_api&quot;,</span></span><br><span class="line"><span class="meta">    blockHandler = &quot;exampleBlockHandler&quot;,</span></span><br><span class="line"><span class="meta">    fallback = &quot;exampleFallback&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;String&gt; <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Result.ok(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;String&gt; <span class="title">exampleBlockHandler</span><span class="params">(BlockException ex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(<span class="number">429</span>, <span class="string">&quot;请求过于频繁&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;String&gt; <span class="title">exampleFallback</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Result.fail(<span class="number">500</span>, <span class="string">&quot;服务异常: &quot;</span> + t.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在控制台为资源 <strong>example_api</strong> 配置流控规则（QPS 或并发数）即可生效。</li>
+<li>限流/熔断时走 <code>blockHandler</code>，方法抛异常时走 <code>fallback</code>。</li>
+</ul>
+<h3 id="4-3-使用方式二：SphU-entry（适合细粒度、多资源）"><a href="#4-3-使用方式二：SphU-entry（适合细粒度、多资源）" class="headerlink" title="4.3 使用方式二：SphU.entry（适合细粒度、多资源）"></a>4.3 使用方式二：SphU.entry（适合细粒度、多资源）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/api/test&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Result&lt;String&gt; <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Entry entry = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        entry = SphU.entry(<span class="string">&quot;MyResource&quot;</span>);</span><br><span class="line">        <span class="comment">// 业务逻辑</span></span><br><span class="line">        <span class="keyword">return</span> Result.ok(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (BlockException e) &#123;</span><br><span class="line">        <span class="keyword">return</span> Result.fail(<span class="number">429</span>, <span class="string">&quot;限流&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (entry != <span class="keyword">null</span>) entry.exit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>必须</strong>在 <code>finally</code> 中调用 <code>entry.exit()</code>，否则统计与限流会异常。</li>
+<li>同一方法内可多次 <code>SphU.entry(&quot;不同资源名&quot;)</code>，实现对不同代码段分别限流。</li>
+</ul>
+<h3 id="4-4-业务场景示例"><a href="#4-4-业务场景示例" class="headerlink" title="4.4 业务场景示例"></a>4.4 业务场景示例</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>建议做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通 HTTP 接口</td>
+<td>用 <code>@SentinelResource</code> 标注方法，控制台按 QPS/并发设阈值。</td>
+</tr>
+<tr>
+<td>秒杀/活动接口</td>
+<td>QPS 限流 +  Warm Up 或排队等待，避免瞬时打满。</td>
+</tr>
+<tr>
+<td>写接口受读接口影响</td>
+<td>写接口资源使用「关联」模式，关联到读接口资源。</td>
+</tr>
+<tr>
+<td>同一逻辑多入口不同限制</td>
+<td>使用链路流控：入口为 URL 或显式 <code>SphU.entry(&quot;entrance_xxx&quot;)</code>，控制台按入口资源配置不同 QPS。</td>
+</tr>
+<tr>
+<td>热点参数（如某 userId）</td>
+<td>使用「热点规则」对参数维度限流。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="五、熔断降级：概念与使用"><a href="#五、熔断降级：概念与使用" class="headerlink" title="五、熔断降级：概念与使用"></a>五、熔断降级：概念与使用</h2><h3 id="5-1-熔断相关概念"><a href="#5-1-熔断相关概念" class="headerlink" title="5.1 熔断相关概念"></a>5.1 熔断相关概念</h3><ul>
+<li><strong>熔断</strong>：当资源在统计窗口内满足「异常比例 / 慢调用比例 / 异常数」等条件时，Sentinel 将该资源置为<strong>熔断状态</strong>，在<strong>熔断时长</strong>内不再放行请求到真实逻辑，直接走 block（降级）。</li>
+<li><strong>熔断策略</strong>（三选一）：<ul>
+<li><strong>慢调用比例</strong>：响应时间超过「最大 RT」的请求占比超过「比例阈值」则熔断（如 50% 请求 &gt; 500ms 则熔断）。</li>
+<li><strong>异常比例</strong>：统计窗口内异常请求占比超过「比例阈值」则熔断。</li>
+<li><strong>异常数</strong>：统计窗口内异常数量达到「异常数阈值」则熔断。</li>
+</ul>
+</li>
+<li><strong>最小请求数</strong>：统计窗口内请求数达到该值后才参与判断，避免样本过少误熔断。</li>
+<li><strong>熔断时长</strong>：熔断状态持续时间，结束后进入半开，再根据后续请求是否正常决定恢复或再次熔断。</li>
+</ul>
+<h3 id="5-2-使用方式（与限流共用同一套资源定义）"><a href="#5-2-使用方式（与限流共用同一套资源定义）" class="headerlink" title="5.2 使用方式（与限流共用同一套资源定义）"></a>5.2 使用方式（与限流共用同一套资源定义）</h3><p>熔断不改变「资源」的写法，只是多了一类「熔断规则」：</p>
+<ul>
+<li>仍用 <code>@SentinelResource(value = &quot;xxx&quot;, blockHandler = &quot;xxx&quot;, fallback = &quot;xxx&quot;)</code> 或 <code>SphU.entry(&quot;xxx&quot;)</code> 定义资源。</li>
+<li>在控制台为该资源配置<strong>熔断规则</strong>（异常比例/慢调用比例/异常数 + 阈值、熔断时长、最小请求数）。</li>
+<li>熔断打开时，请求不会进入方法体，直接触发 <strong>blockHandler</strong>，因此 blockHandler 里应返回「服务降级」类结果（如 503、默认数据）。</li>
+</ul>
+<h3 id="5-3-业务场景示例"><a href="#5-3-业务场景示例" class="headerlink" title="5.3 业务场景示例"></a>5.3 业务场景示例</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>建议做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Feign 调下游服务</td>
+<td>为 Feign 接口配置 fallback/fallbackFactory，控制台对 Feign 资源名配置熔断规则（异常比例或慢调用比例）。</td>
+</tr>
+<tr>
+<td>调 DB / Redis / MQ</td>
+<td>对「调用 DB/Redis 的那段逻辑」作为资源，配置熔断 + fallback 返回默认值或友好提示。</td>
+</tr>
+<tr>
+<td>第三方 HTTP 接口</td>
+<td>同 Feign：资源为「调用该接口的方法」，熔断 + blockHandler 返回降级结果。</td>
+</tr>
+<tr>
+<td>本机内易出错或耗时的逻辑</td>
+<td>用 <code>@SentinelResource</code> 包住该方法，配置熔断；异常由 fallback 处理，熔断打开时由 blockHandler 返回降级。</td>
+</tr>
+</tbody></table>
+<h3 id="5-4-与-Feign-结合说明"><a href="#5-4-与-Feign-结合说明" class="headerlink" title="5.4 与 Feign 结合说明"></a>5.4 与 Feign 结合说明</h3><ul>
+<li>Feign 调用是熔断的<strong>典型场景</strong>：下游超时或异常时，通过熔断快速失败并走 fallback，避免线程堆积和雪崩。</li>
+<li>使用方式：开启 <code>spring.cloud.openfeign.sentinel.enabled=true</code>，为 Feign 接口指定 <code>fallback</code> 或 <code>fallbackFactory</code>；控制台中对 Feign 自动暴露的资源名（一般为 <code>接口全限定名#方法名</code>）配置熔断规则即可。</li>
+<li>注意：在 Spring Boot 4 + Jackson 3 环境下，若开启 Feign Sentinel 报错，可补充 <code>com.fasterxml.jackson.core:jackson-core</code>（2.x）依赖或暂时关闭 Feign Sentinel，仅对「本机内模拟下游」的资源的熔断做演示（逻辑一致）。</li>
+</ul>
+<hr>
+<h2 id="六、控制台与配置要点"><a href="#六、控制台与配置要点" class="headerlink" title="六、控制台与配置要点"></a>六、控制台与配置要点</h2><h3 id="6-1-控制台（Dashboard）"><a href="#6-1-控制台（Dashboard）" class="headerlink" title="6.1 控制台（Dashboard）"></a>6.1 控制台（Dashboard）</h3><ul>
+<li>用于查看<strong>实时监控</strong>（通过 QPS、拒绝 QPS、响应时间）、<strong>簇点链路</strong>（资源列表）、<strong>流控规则 / 熔断规则</strong>等。</li>
+<li>规则在控制台配置后会<strong>推送到应用</strong>，应用内规则变更可实时生效（无需重启）。</li>
+<li>应用要出现在控制台，需：  <ul>
+<li>引入 <strong>spring-cloud-starter-alibaba-sentinel</strong>（或至少 <strong>sentinel-transport-simple-http</strong>）；  </li>
+<li>配置 <code>spring.cloud.sentinel.transport.dashboard</code>、<code>transport.port</code> 等；  </li>
+<li>应用启动后至少有一次请求触发该资源，或开启 <code>eager=true</code> 等以便尽早注册。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-2-常用配置项（application-properties-yaml）"><a href="#6-2-常用配置项（application-properties-yaml）" class="headerlink" title="6.2 常用配置项（application.properties / yaml）"></a>6.2 常用配置项（application.properties / yaml）</h3><table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>spring.cloud.sentinel.transport.dashboard</code></td>
+<td>控制台地址（如 localhost:8080）</td>
+</tr>
+<tr>
+<td><code>spring.cloud.sentinel.transport.port</code></td>
+<td>本机暴露给控制台的端口（默认 8719）</td>
+</tr>
+<tr>
+<td><code>spring.cloud.sentinel.transport.client-ip</code></td>
+<td>本机 IP，控制台连回应用时使用</td>
+</tr>
+<tr>
+<td><code>spring.cloud.sentinel.eager</code></td>
+<td>true 时启动即初始化并连接控制台</td>
+</tr>
+<tr>
+<td><code>spring.cloud.sentinel.web-context-unify</code></td>
+<td>false 时按请求区分入口，<strong>链路流控</strong>才可能按「入口」生效</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、小结"><a href="#七、小结" class="headerlink" title="七、小结"></a>七、小结</h2><ul>
+<li><strong>背景</strong>：微服务下流量与依赖故障带来的稳定性问题，需要统一的限流与熔断能力；Sentinel 以「资源 + 规则」的方式提供这些能力。</li>
+<li><strong>作用</strong>：限流（控 QPS/并发）、熔断降级（异常/慢调用时快速失败）、系统保护、热点与授权等；最常用的是限流和熔断。</li>
+<li><strong>使用</strong>：  <ul>
+<li><strong>限流</strong>：用 <code>@SentinelResource</code> 或 <code>SphU.entry</code> 定义资源，在控制台配置流控规则（直接/关联/链路 + QPS 或并发 + 流控效果）。  </li>
+<li><strong>熔断</strong>：同一资源在控制台配置熔断规则（异常比例/慢调用比例/异常数），熔断期间走 blockHandler 降级。  </li>
+</ul>
+</li>
+<li><strong>业务场景</strong>：普通接口限流、秒杀/活动、Feign 调用熔断、DB/Redis/第三方调用熔断、热点参数限流等，均可通过「资源 + 对应规则」实现。</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ssllp.github.io/2026/02/20/Sentinel%E5%AD%A6%E4%B9%A0/" title="Sentinel学习" target="_blank" rel="external">https://ssllp.github.io/2026/02/20/Sentinel学习/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ssllp" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ssllp" target="_blank"><span class="text-dark">ssllp</span><small class="ml-1x">Java开发</small></a></h3>
+        <div>持续学习</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/11/11/RabbitMQ%E5%AD%A6%E4%B9%A0/" title="RabbitMQ学习"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">    <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ssllp" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
